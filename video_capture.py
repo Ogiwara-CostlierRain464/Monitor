@@ -16,6 +16,6 @@ class VideoCapture:
         frame = imutils.resize(frame, width=500)
         return ret, frame
 
-    def __del__(self):
+    def exit(self):
         if self.vid.isOpened():
             self.vid.release()
