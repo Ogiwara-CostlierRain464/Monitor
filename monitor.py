@@ -2,12 +2,12 @@ import tkinter
 import cv2
 from PIL import Image, ImageTk
 
+from human_list import HumanList
 from servo import *
 from video_capture import VideoCapture
 
 CASCADE_PATH = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(CASCADE_PATH)
-
 
 class App:
     def __init__(self, window, servo):
@@ -29,8 +29,7 @@ class App:
         self.btn_stop = tkinter.Button(window, text="STOP", command=self.stop_camera)
         self.btn_stop.grid(row=1, column=3)
 
-        self.list = tkinter.Listbox(window)
-        self.list.grid(row=0, column=4)
+        self.human_list = HumanList(window)
 
         self.vid = VideoCapture()
         self.servo = servo
@@ -65,12 +64,10 @@ class App:
             minSize=(30, 30)
         )
 
-        self.list.delete(0, tkinter.END)
-
-        # Draw a rectangle around the faces
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            self.list.insert(tkinter.END, "Human")
+
+        self.human_list.update(faces)
 
         self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
         self.canvas.create_image(0, 0, image=self.photo, anchor=tkinter.NW)
