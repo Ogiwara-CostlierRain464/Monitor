@@ -32,10 +32,9 @@ class HumanList:
         # 次に、newな奴を挿入していくだけ
         for (x, y, w, h) in new_faces:
             may_be_new_id = self.id((x, y))
-            # これだと全部入ることにならない？
             if may_be_new_id not in remain.keys() and may_be_new_id not in still_exist_ids:
                 print("here")
-                self.list.insert(len(self.id_index_list), "HUMAN")
+                self.list.insert(len(self.id_index_list), "HUMAN1")
                 remain[may_be_new_id] = (x, y, w, h)
                 self.id_index_list[may_be_new_id] = len(self.id_index_list)
 

@@ -19,16 +19,23 @@ class Servo:
     def exit(self):
         self.board.exit()
 
+    def rotate(self, degrees):
+        # Rotate specified degrees.
+        # Have to wait until rotate finish.
+        # Use timer to cancel operation while rotating.
+        pass
+
 
 class DummyServo:
     """
     Dummy class used for debugging.
     """
-    def write(self):
-        pass
+
+    def write(self, degrees):
+        print("Write {0}".format(degrees))
 
     def stop(self):
-        pass
+        print("Stop")
 
     def exit(self):
-        pass
+        print("Exit")

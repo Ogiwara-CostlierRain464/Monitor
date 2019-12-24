@@ -1,4 +1,5 @@
 import tkinter
+from tkinter import messagebox
 import cv2
 from PIL import Image, ImageTk
 
@@ -44,7 +45,8 @@ class App:
             degrees = int(self.edit_box.get())
             self.servo.write(degrees)
         except ValueError:
-            pass
+            print("Enter number.")
+
 
     def move_camera(self):
         self.servo.write(120)
