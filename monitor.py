@@ -4,9 +4,10 @@ from PIL import Image, ImageTk
 import time
 import imutils
 from pyfirmata import ArduinoNano, util
+from video_capture import VideoCapture
 
-cascPath = "haarcascade_frontalface_default.xml"
-faceCascade = cv2.CascadeClassifier(cascPath)
+CASCADE_PATH = "haarcascade_frontalface_default.xml"
+faceCascade = cv2.CascadeClassifier(CASCADE_PATH)
 
 
 class App:
@@ -25,7 +26,7 @@ class App:
         self.btn_stop = tkinter.Button(window, text="STOP", width=50, command=self.stop_camera)
         self.btn_stop.pack(anchor=tkinter.CENTER, expand=True)
 
-        self.board = ArduinoNano('/dev/cu.usbserial-1430')
+        self.board = ArduinoNano('/dev/cu.usbserial-1410')
         self.servo = self.board.get_pin('d:9:s')
 
         self.delay = 15
@@ -37,10 +38,16 @@ class App:
         print("Snapshot!")
 
     def move_camera(self):
-        self.servo.write(120)
+        try:
+            self.servo.write(120)
+        except IOError as e:
+            print("Error: {0}".format(e))
 
     def stop_camera(self):
-        self.servo.write(90)
+        try:
+            self.servo.write(90)
+        except IOError as e:
+            print("Error: {0}".format(e))
 
     def update(self):
         ret, frame = self.vid.get_frame()
@@ -65,22 +72,6 @@ class App:
 
     def __del__(self):
         self.board.exit()
-
-
-class VideoCapture:
-    def __init__(self):
-        self.vid = cv2.VideoCapture(0)
-        if not self.vid.isOpened():
-            raise ValueError("Unable to open video source")
-
-    def get_frame(self):
-        ret, frame = self.vid.read()
-        frame = imutils.resize(frame, width=500)
-        return ret, frame
-
-    def __del__(self):
-        if self.vid.isOpened():
-            self.vid.release()
 
 
 App(tkinter.Tk())
