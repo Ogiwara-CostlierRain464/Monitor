@@ -101,5 +101,5 @@ class App:
         self.vid.exit()
 
 
-App(tkinter.Tk(), DummyServo())
-# App(tkinter.Tk(), Servo(port_number=1410, pin_number=9, base_degrees=95))
+# App(tkinter.Tk(), DummyServo())
+App(tkinter.Tk(), Servo(port_number=1410, pin_number=9, base_degrees=95))
