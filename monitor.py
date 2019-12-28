@@ -12,11 +12,13 @@ faceCascade = cv2.CascadeClassifier(CASCADE_PATH)
 
 
 class App:
+    canvas_width = 500
+
     def __init__(self, window, servo):
         self.window = window
         self.window.title(u"Monitor")
 
-        self.canvas = tkinter.Canvas(window, width=500, height=400)
+        self.canvas = tkinter.Canvas(window, width=self.canvas_width, height=self.canvas_width * (9 / 16))
         self.canvas.grid(columnspan=4)
 
         self.edit_box = tkinter.Entry(window)
@@ -52,17 +54,23 @@ class App:
             print("Enter number.")
 
     def look_human(self):
-        # At here , when the person is left, turn left
-        # otherwise , turn right
-        # just really simple program!
-        print("TURN")
-        pass
+        face = self.human_list.selected
+
+        if face is None:
+            return
+
+        if face[0] < (self.canvas_width / 2):
+            self.move_left()
+        else:
+            self.move_right()
 
     def move_left(self):
+        print("MOVING LEFT")
         thread = threading.Thread(target=lambda: self.servo.turn_left())
         thread.start()
 
     def move_right(self):
+        print("MOVING RIGHT")
         thread = threading.Thread(target=lambda: self.servo.turn_right())
         thread.start()
 

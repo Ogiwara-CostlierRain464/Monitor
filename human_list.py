@@ -1,5 +1,6 @@
 import tkinter
 from math import sqrt
+from typing import Union, Tuple
 
 
 class HumanList:
@@ -9,6 +10,26 @@ class HumanList:
         # { 213: (x,y,w,h), 390: (x,y,w,h) ...  }
         self.id_face_list = {}
         self.id_index_list = {}
+
+    @property
+    def selected(self) -> Union[Tuple, None]:
+        select = self.list.curselection()
+
+        if len(select) == 0:
+            return None
+
+        (select_index,) = select
+        _id = self.__find_id_by_index(select_index)
+
+        if _id is None:
+            return None
+
+        return self.id_face_list[_id]
+
+    def __find_id_by_index(self, index) -> Union[int, None]:
+        for _id, _index in self.id_index_list.items():
+            if index == _index:
+                return _id
 
     def update(self, new_faces):
         remain = {}
