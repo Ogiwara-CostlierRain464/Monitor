@@ -10,6 +10,7 @@ from video_capture import VideoCapture
 CASCADE_PATH = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(CASCADE_PATH)
 
+
 class App:
     def __init__(self, window, servo):
         self.window = window
@@ -21,14 +22,17 @@ class App:
         self.edit_box = tkinter.Entry(window)
         self.edit_box.grid(row=1, column=0)
 
-        self.btn_snapshot = tkinter.Button(window, text="Write", command=self.write_to_servo)
+        self.btn_snapshot = tkinter.Button(window, text="WRITE", command=self.write_to_servo)
         self.btn_snapshot.grid(row=1, column=1)
 
-        self.btn_move = tkinter.Button(window, text="MOVE", command=self.move_camera)
+        self.btn_move = tkinter.Button(window, text="LEFT", command=self.move_left)
         self.btn_move.grid(row=1, column=2)
 
-        self.btn_stop = tkinter.Button(window, text="STOP", command=self.stop_camera)
+        self.btn_stop = tkinter.Button(window, text="RIGHT", command=self.move_right)
         self.btn_stop.grid(row=1, column=3)
+
+        self.btn_stop = tkinter.Button(window, text="TRACE", command=self.look_human)
+        self.btn_stop.grid(row=1, column=4)
 
         self.human_list = HumanList(window)
 
@@ -47,12 +51,20 @@ class App:
         except ValueError:
             print("Enter number.")
 
+    def look_human(self):
+        # At here , when the person is left, turn left
+        # otherwise , turn right
+        # just really simple program!
+        print("TURN")
+        pass
 
-    def move_camera(self):
-        self.servo.write(120)
+    def move_left(self):
+        thread = threading.Thread(target=lambda: self.servo.turn_left())
+        thread.start()
 
-    def stop_camera(self):
-        self.servo.stop()
+    def move_right(self):
+        thread = threading.Thread(target=lambda: self.servo.turn_right())
+        thread.start()
 
     def update(self):
         ret, frame = self.vid.get_frame()
@@ -82,3 +94,4 @@ class App:
 
 
 App(tkinter.Tk(), DummyServo())
+# App(tkinter.Tk(), Servo(port_number=1410, pin_number=9, base_degrees=95))
