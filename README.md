@@ -1,9 +1,7 @@
-pyenvだと何かとクソなので、
-which python3上で実行。
-
 # Setup
-ArduinoとWebカメラをつないで、プログラムを実行する。　
-ArduinoはD9ポートにサーボモータを接続する。
+- Connect Arduino and Web camera and run `monitor.py`.　
+- Connect servo motor for D9 port to Arduino.
 
-# Support
-- [Grid layout](http://effbot.org/tkinterbook/grid.htm)
+# For developer
+- venv may not work properly when using Tkinter or pyFiramata.
+- See Tkinter API documentation at [here](http://effbot.org/tkinterbook/).
