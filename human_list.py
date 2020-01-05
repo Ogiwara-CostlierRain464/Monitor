@@ -1,6 +1,6 @@
 import tkinter
 from math import sqrt
-from typing import Union, Tuple
+from typing import Union, Tuple, Optional
 
 
 class HumanList:
@@ -12,7 +12,7 @@ class HumanList:
         self.id_index_list = {}
 
     @property
-    def selected(self) -> Union[Tuple, None]:
+    def selected(self) -> Optional[Tuple]:
         select = self.list.curselection()
 
         if len(select) == 0:
@@ -55,7 +55,7 @@ class HumanList:
             may_be_new_id = self.id((x, y))
             if may_be_new_id not in remain.keys() and may_be_new_id not in still_exist_ids:
                 print("here")
-                self.list.insert(len(self.id_index_list), "HUMAN1")
+                self.list.insert(len(self.id_index_list), "HUMAN {0}".format(may_be_new_id))
                 remain[may_be_new_id] = (x, y, w, h)
                 self.id_index_list[may_be_new_id] = len(self.id_index_list)
 

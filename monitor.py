@@ -57,12 +57,19 @@ class App:
         face = self.human_list.selected
 
         if face is None:
+            print("Please select human from list.")
             return
 
-        if face[0] < (self.canvas_width / 2):
+        face_pos = face[0] + face[2] / 2
+        left_line = self.canvas_width / 3
+        right_line = left_line * 2
+
+        if 0 < face_pos < left_line:
             self.move_left()
-        else:
+        elif right_line < face_pos:
             self.move_right()
+        else:
+            print("NOT MOVE")
 
     def move_left(self):
         print("MOVING LEFT")
@@ -101,5 +108,5 @@ class App:
         self.vid.exit()
 
 
-# App(tkinter.Tk(), DummyServo())
-App(tkinter.Tk(), Servo(port_number=1410, pin_number=9, base_degrees=95))
+App(tkinter.Tk(), DummyServo())
+# App(tkinter.Tk(), Servo(port_number=1410, pin_number=9, base_degrees=95))
