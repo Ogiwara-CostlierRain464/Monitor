@@ -6,10 +6,13 @@ from typing import Union, Tuple, Optional
 class HumanList:
     def __init__(self, window):
         self.list = tkinter.Listbox(window)
-        self.list.grid(row=0, column=4)
+
         # { 213: (x,y,w,h), 390: (x,y,w,h) ...  }
         self.id_face_list = {}
         self.id_index_list = {}
+
+    def grid(self, row=0, column=4):
+        self.list.grid(row=row, column=column)
 
     @property
     def selected(self) -> Optional[Tuple]:

@@ -18,6 +18,7 @@ class App:
         self.window = window
         self.window.title(u"Monitor")
 
+        # Set canvas aspect as 9:16.
         self.canvas = tkinter.Canvas(window, width=self.canvas_width, height=self.canvas_width * (9 / 16))
         self.canvas.grid(columnspan=4)
 
@@ -37,6 +38,7 @@ class App:
         self.btn_stop.grid(row=1, column=4)
 
         self.human_list = HumanList(window)
+        self.human_list.grid(row=0, column=4)
 
         self.vid = VideoCapture()
         self.servo = servo
