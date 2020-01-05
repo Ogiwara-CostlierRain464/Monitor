@@ -7,8 +7,13 @@ class HumanList:
     def __init__(self, window):
         self.list = tkinter.Listbox(window)
 
+        # idとface dataのペアを保存
+        # e.g.
         # { 213: (x,y,w,h), 390: (x,y,w,h) ...  }
         self.id_face_list = {}
+        # idとリスト内の対応するindexのペアを保存
+        # e.g.
+        # { 213: 0, 390: 1}
         self.id_index_list = {}
 
     def grid(self, row=0, column=4):
@@ -16,6 +21,8 @@ class HumanList:
 
     @property
     def selected(self) -> Optional[Tuple]:
+        """リストのうち、選択された人間の顔データを返す"""
+
         select = self.list.curselection()
 
         if len(select) == 0:
@@ -57,7 +64,7 @@ class HumanList:
         for (x, y, w, h) in new_faces:
             may_be_new_id = self.id((x, y))
             if may_be_new_id not in remain.keys() and may_be_new_id not in still_exist_ids:
-                print("here")
+                print("NEW FACE")
                 self.list.insert(len(self.id_index_list), "HUMAN {0}".format(may_be_new_id))
                 remain[may_be_new_id] = (x, y, w, h)
                 self.id_index_list[may_be_new_id] = len(self.id_index_list)
@@ -66,11 +73,13 @@ class HumanList:
 
     @staticmethod
     def d(pos1, pos2):
+        """二つの座標の距離関数"""
         x1, y1 = pos1
         x2, y2 = pos2
         return sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
     @staticmethod
     def id(pos):
+        """IDは、最初に顔が認識された時のx,y座標の合計で表す"""
         x, y = pos
         return x + y

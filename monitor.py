@@ -13,6 +13,7 @@ faceCascade = cv2.CascadeClassifier(CASCADE_PATH)
 
 class App:
     canvas_width = 500
+    delay = 15
 
     def __init__(self, window, servo):
         self.window = window
@@ -43,9 +44,7 @@ class App:
         self.vid = VideoCapture()
         self.servo = servo
 
-        self.delay = 15
         self.update()
-
         self.window.mainloop()
 
     def write_to_servo(self):
@@ -88,6 +87,7 @@ class App:
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
+        # Detect human face
         faces = faceCascade.detectMultiScale(
             gray,
             scaleFactor=1.1,
@@ -103,6 +103,7 @@ class App:
         self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
         self.canvas.create_image(0, 0, image=self.photo, anchor=tkinter.NW)
 
+        # call update function every 15ms.
         self.window.after(self.delay, self.update)
 
     def __del__(self):

@@ -63,7 +63,7 @@ class Servo:
         pass
 
 
-class DummyServo():
+class DummyServo:
     """
     Dummy class used for debugging.
     """
@@ -78,10 +78,10 @@ class DummyServo():
         print("Exit")
 
     def turn_left(self):
-        pass
+        print("Turn left")
 
     def turn_right(self):
-        pass
+        print("Turn rigth")
 
     def rotate(self, degrees):
         pass
