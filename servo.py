@@ -6,7 +6,7 @@ import threading
 
 class Servo:
     # 0.4s, +10 is 90degrees.
-    delay_time = 0.4
+    delay_time = 0.15
 
     def __init__(self, port_number, pin_number, base_degrees):
         self.base_degrees = base_degrees
